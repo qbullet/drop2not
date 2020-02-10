@@ -13,12 +13,22 @@
         :footer-bg-variant="footerBgVariant"
         :footer-text-variant="footerTextVariant"
     >
-        <template>
-            <div align="center">
-                <div><img src="../assets/img/icon-sad.svg"/></div>
-                <h1>เราแนะนำให้คุณถอนวิชานี้</h1>
-            </div>
-        </template>
+        <div v-if="Math.random() > 0.5">
+            <template>
+                <div align="center">
+                    <div><img src="../assets/img/icon-sad.svg"/></div>
+                    <h3>เราแนะนำให้คุณถอนวิชานี้</h3>
+                </div>
+            </template>
+        </div>
+        <div v-else>
+            <template>
+                <div align="center">
+                    <div><img src="../assets/img/icon-congratulations.svg"/></div>
+                    <h3>เราแนะนำให้คุณไม่ดรอปวิชานี้</h3>
+                </div>
+            </template>
+        </div>
     </b-modal>
     </div>
 </template>
@@ -28,6 +38,8 @@
         name: 'Success',
         data(){
             return{
+                result:true,
+                rand:0,
                 headerBgVariant: 'primary',
                 headerTextVariant: 'light',
                 bodyBgVariant: 'light',
@@ -35,8 +47,6 @@
                 footerBgVariant: 'primary',
                 footerTextVariant: 'dark'
             }
-
-            
         },
         methods: {
         },
