@@ -98,7 +98,7 @@
                             ></b-form-radio-group>
                         </b-form-group>
 
-                        <b-form-group label="ทำการบ้านด้วยตนเอง" >
+                        <b-form-group label="การส่งการบ้าน" >
                             <b-form-radio-group
                                 id="btn-doHWByMyself"
                                 v-model="form.doHWByMyself"
