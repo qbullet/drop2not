@@ -34,7 +34,6 @@
 
     <formPage/>
     <success/>
-
   </div>
 </template>
 
@@ -42,6 +41,7 @@
 
 import formPage from './components/FormPage.vue'
 import success from './components/Success.vue'
+import KnowledgeProvider from './components/provider/KnowledgeProvider'
 
 export default {
   name: 'App',
@@ -51,13 +51,17 @@ export default {
   },
   data(){
     return{
-      numberOfAdvised : 74,
+      numberOfAdvised : null,
     }
+  },
+  async mounted(){
+    let temp = await KnowledgeProvider()
+    this.numberOfAdvised = temp.count
   }
 }
 </script>
 
-<style>
+<style >
 #app {
   /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

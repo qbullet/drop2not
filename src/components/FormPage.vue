@@ -17,6 +17,21 @@
         <template>
             <div align="center">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show" >
+                    <div style="padding-bottom:4%">
+                        <b-container class="bv-example-row">
+                            <b-row>
+                                <b-col>
+                                    <label for="input-score">คะแนนสอบกลางภาค</label>
+                                    <b-form-spinbutton id="input-score" v-model="form.score" min="1" max="100"></b-form-spinbutton>
+                                </b-col>
+                                <b-col>
+                                    <label for="input-max-score">คะแนนเต็ม</label>
+                                    <b-form-spinbutton id="input-max-score" v-model="form.maxScore" min="1" max="100"></b-form-spinbutton>
+                                </b-col>
+                            </b-row>
+                        </b-container>
+                    </div>
+
                     <b-form-group >
                         <b-form-radio-group
                             id="btn-yearEdu"
@@ -29,6 +44,20 @@
                         ></b-form-radio-group>
                     </b-form-group>
 
+                    <div class="mt-2" align="left">เกรดเฉลี่ย : <b>{{ form.gpa }}</b></div>
+                    <b-form-group id="input-name-gpa"  label-for="input-gpa">
+                        <b-form-input
+                        id="input-gpa"
+                        v-model="form.gpa"
+                        required
+                        type="range"
+                        min="0.0"
+                        max="4.0"
+                        step="0.01"
+                        placeholder="เกรดเฉลี่ย"
+                        ></b-form-input>
+                    </b-form-group>
+
                     <b-form-group id="input-group-subject" label-for="input-subject">
                         <b-form-select
                         id="input-subject"
@@ -36,18 +65,6 @@
                         :options="options.subjects"
                         required
                         ></b-form-select>
-                    </b-form-group>
-
-                    <b-form-group id="input-name-score"  label-for="input-score">
-                        <b-form-input
-                        id="input-score"
-                        v-model="form.score"
-                        required
-                        min="0"
-                        max="100"
-                        type="number"
-                        placeholder="คะแนนสอบมิดเทอม"
-                        ></b-form-input>
                     </b-form-group>
 
                     <b-form-group id="input-group-teacher" label-for="input-teacher">
@@ -58,17 +75,43 @@
                         required
                         ></b-form-select>
                     </b-form-group>
+                    <div align="left">
+                        <b-form-group label="ความเข้าใจในเนื้อหา" >
+                            <b-form-radio-group
+                                id="btn-knowledgeScore"
+                                v-model="form.knowledgeScore"
+                                :options="options.knowledgeScores"
+                                buttons
+                                button-variant="outline-primary"
+                                size="sm"
+                                name="radio-btn-outline"
+                            ></b-form-radio-group>
+                        </b-form-group>
 
-                    <b-form-group id="input-name-gpa"  label-for="input-gpa">
-                        <b-form-input
-                        id="input-gpa"
-                        v-model="form.gpa"
-                        required
-                        min="0"
-                        max="100"
-                        placeholder="เกรดเฉลี่ย"
-                        ></b-form-input>
-                    </b-form-group>
+                        <b-form-group label="ทำการบ้านด้วยตนเอง" >
+                            <b-form-radio-group
+                                id="btn-doHWByMyself"
+                                v-model="form.doHWByMyself"
+                                :options="options.doHWByMyselves"
+                                buttons
+                                button-variant="outline-primary"
+                                size="sm"
+                                name="radio-btn-outline"
+                            ></b-form-radio-group>
+                        </b-form-group>
+
+                        <b-form-group label="การเข้าเรียน" >
+                            <b-form-radio-group
+                                id="btn-takeClass"
+                                v-model="form.takeClass"
+                                :options="options.takeClasses"
+                                buttons
+                                button-variant="outline-primary"
+                                size="sm"
+                                name="radio-btn-outline"
+                            ></b-form-radio-group>
+                        </b-form-group>
+                    </div>
 
                     <div>
                         <span><b-button type="submit" variant="primary" size="md">ยืนยัน</b-button></span>
@@ -76,37 +119,19 @@
                     </div>
                     
             </b-form>
-            <!-- <b-card class="mt-3" header="Form Data Result">
-                <pre class="m-0">{{ form }}</pre>
-            </b-card> -->
             </div>
+
         </template>
     </b-modal>
 
-    <!-- <b-modal 
-        id="modal-result" 
-        ref="modal-result"
-        size="md" 
-        title="คำแนะนำจากเรา" 
-        scrollable
-        :header-bg-variant="headerBgVariant"
-        :header-text-variant="headerTextVariant"
-        :body-bg-variant="bodyBgVariant"
-        :body-text-variant="bodyTextVariant"
-        :footer-bg-variant="footerBgVariant"
-        :footer-text-variant="footerTextVariant"
-    >
-        <template>
-            <div align="center">
-                <div><img src="../assets/img/icon-sad.svg"/></div>
-                <h1>เราแนะนำให้คุณถอนวิชานี้</h1>
-            </div>
-        </template>
-    </b-modal> -->
   </div>
 </template>
 
 <script>
+import SubjProvider from './provider/SubjectProvider'
+import InstProvider from './provider/InstructorProvider'
+import PredictProvider from './provider/PredictProvider'
+
 export default {
     name: 'formPage',
     data(){
@@ -115,40 +140,43 @@ export default {
             form: {
                 yearEduSel: 1,
                 subjectSel: null,
-                score: '',
+                score: 15,
+                maxScore:30,
                 teacherSel: null,
-                gpa: '',
+                gpa: 2.0,
+                knowledgeScore:3,
+                doHWByMyself:2,
+                takeClass:1,
             },
 
             options:{
                 yearEdus:[
                     {text: 'ชั้นปีที่ 1',value: 1 },
                     {text: 'ชั้นปีที่ 2',value: 2 },
-                    {text: 'ชั้นปีที่ 3',value: 3 },
-                    {text: 'ชั้นปีที่ 4',value: 4 },
-                    {text: 'มากกว่าชั้นปีที่ 4',value: 5 },
+                    {text: 'ชั้นปีที่ 3',value: 2 },
+                    {text: 'ชั้นปีที่ 4',value: 3 },
+                    {text: 'มากกว่าชั้นปีที่ 4',value: 3 },
                 ],
-
-                subjects: [
-                    { text: 'วิชาที่กำลังตัดสินใจ',value: null ,disabled: true},
-                    { text: 'CLIENT/SERVER', value:  '060001'},
-                    { text: 'DATA MINING', value:  '060002'},
-                    { text: 'DECISSION SUPPORT SYSTEM', value: '060003' },
-                    { text: 'CLOUD APP SERVICE', value: '060004' },
-                    { text: 'MOBILE APP', value: '060005' },
+                subjects: [],
+                teachers: [],
+                knowledgeScores:[
+                    {text: 'ไม่ค่อยเข้าใจ',value: 1.5 },
+                    {text: 'ปานกลาง',value: 3 },
+                    {text: 'เข้าใจดี',value: 4 },
                 ],
-
-                teachers: [
-                    { text: 'อาจารย์ผู้สอน',value: null ,disabled: true},
-                    { text: 'อาจารย์ประดิษฐ์ พิทักษ์เสถียรกุล', value:  'PPK'},
-                    { text: 'อาจารย์วันทนี	ประจวบศุภกิจ', value:  'WMK'},
-                    { text: 'อาจารย์สุปีติ	กุลจันทร์', value: 'SKC' },
-                    { text: 'อาจารย์ศรายุทธ ธเนศสกุลวัฒนา', value: 'STS' },
+                doHWByMyselves:[
+                    {text: 'ไม่เคยทำด้วยตนเอง',value: 1 },
+                    {text: 'ทำด้วยตนเองบางครั้ง',value: 2 },
+                    {text: 'ทำด้วยตนเองเสมอ',value: 3 },
+                ],
+                takeClasses:[
+                    {text: 'ขาดเรียนบ่อย',value: 0.5 },
+                    {text: 'ขาดบ้างบางครั้ง',value: 1 },
+                    {text: 'เข้าเรียนเสมอ',value: 1.5 },
                 ],
 
             },
 
-            
             headerBgVariant: 'primary',
             headerTextVariant: 'light',
             bodyBgVariant: 'light',
@@ -160,28 +188,76 @@ export default {
         
     },
     methods: {
-        onSubmit(evt) {
+        async onSubmit(evt) {
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
+            let resp = await PredictProvider(this.resultCalc())
             this.$refs['modal-form'].hide()
             //this.$refs['modal-result'].show()
-            this.$bvModal.show('modal-result')
+            if (resp.state == 100)this.$bvModal.show('modal-drop')
+            else if (resp.state == 200)this.$bvModal.show('modal-nodrop')
             },
         onReset(evt) {
             evt.preventDefault()
             // Reset our form values
-            this.form.yearEduSel = 1,
-            this.form.subjectSel = null,
-            this.form.score = '',
-            this.form.teacherSel = null,
-            this.form.gpa = '',
+            this.form.yearEduSel = 1
+            this.form.subjectSel = null
+            this.form.score = 15
+            this.form.maxScore = 30
+            this.form.teacherSel = null
+            this.form.gpa = 2.0
+            this.form.knowledgeScore = 3
+            this.form.doHWByMyself = 2
+            this.form.takeClass = 1
             // Trick to reset/clear native browser form validation state
             this.show = false
             this.$nextTick(() => {
                 this.show = true
             })
+        },
+        resultCalc(){
+            let midscore = (this.form.score * 100) / this.form.maxScore
+            // let result = {
+            //     "midterm":midscore,
+            //     "yearOfEdu":this.form.yearEduSel,
+            //     "GPAX":this.form.gpa,
+            //     "subject":this.form.subjectSel,
+            //     "instructor":this.form.teacherSel,
+            //     "knowledge":this.form.knowledgeScore,
+            //     "dohomeWork":this.form.doHWByMyself,
+            //     "takeAclass":this.form.takeClass
+            // }
+
+            let result = {
+                midterm:midscore,
+                yearOfEdu:this.form.yearEduSel,
+                GPAX:this.form.gpa,
+                subject:this.form.subjectSel,
+                instructor:this.form.teacherSel,
+                knowledge:this.form.knowledgeScore,
+                dohomeWork:this.form.doHWByMyself,
+                takeAclass:this.form.takeClass,
+            }
+
+            return result
+        },
+        async initData(){
+            let subj = await SubjProvider()
+            let inst = await InstProvider()
+            
+            this.options.subjects.push({ text: 'วิชาที่กำลังตัดสินใจ',value: null ,disabled: true})
+            subj.forEach(element => {
+                this.options.subjects.push({ text: element.subject, value: element.weight})
+            });
+            this.options.teachers.push({ text: 'อาจารย์ผู้สอน',value: null ,disabled: true})
+            inst.forEach(element => {
+                this.options.teachers.push({ text: element.name, value: element.weight})
+            });
         }
     },
+    mounted() {   
+        this.initData()
+    }
 }
 </script>
 
