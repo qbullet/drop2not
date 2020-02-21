@@ -43,8 +43,18 @@
                             name="radio-btn-outline"
                         ></b-form-radio-group>
                     </b-form-group>
-
-                    <div class="mt-2" align="left">เกรดเฉลี่ย : <b>{{ form.gpa }}</b></div>
+                    
+                    <b-container class="bv-example-row">
+                        <b-row>
+                            <b-col >
+                                <div class="mt-2" align="right">เกรดเฉลี่ย : </div>
+                            </b-col>
+                            <b-col cols="8">
+                                <b-form-spinbutton id="input-max-score" v-model="form.gpa" min="0.00" max="4.00" step="0.01"></b-form-spinbutton>
+                            </b-col>
+                        </b-row>
+                    </b-container>
+                    
                     <b-form-group id="input-name-gpa"  label-for="input-gpa">
                         <b-form-input
                         id="input-gpa"
@@ -158,19 +168,19 @@ export default {
                 subjects: [],
                 teachers: [],
                 knowledgeScores:[
-                    {text: 'ไม่ค่อยเข้าใจ',value: 1.5 },
-                    {text: 'ปานกลาง',value: 3 },
-                    {text: 'เข้าใจดี',value: 4 },
+                    {text: 'ไม่ค่อยเข้าใจ',value: 1 },
+                    {text: 'ปานกลาง',value: 2 },
+                    {text: 'เข้าใจดี',value: 3 },
                 ],
                 doHWByMyselves:[
-                    {text: 'ไม่เคยทำด้วยตนเอง',value: 1 },
-                    {text: 'ทำด้วยตนเองบางครั้ง',value: 2 },
-                    {text: 'ทำด้วยตนเองเสมอ',value: 3 },
+                    {text: 'ไม่ค่อยส่งเลย',value: 1 },
+                    {text: 'ส่งบ่อยครั้ง',value: 2 },
+                    {text: 'ส่งทุกครั้ง',value: 3 },
                 ],
                 takeClasses:[
-                    {text: 'ขาดเรียนบ่อย',value: 0.5 },
-                    {text: 'ขาดบ้างบางครั้ง',value: 1 },
-                    {text: 'เข้าเรียนเสมอ',value: 1.5 },
+                    {text: 'ขาดเรียนบ่อย',value: 1 },
+                    {text: 'ขาดบ้างบางครั้ง',value: 2 },
+                    {text: 'เข้าเรียนเสมอ',value: 3 },
                 ],
 
             },
@@ -191,7 +201,18 @@ export default {
             //alert(JSON.stringify(this.form))
             let resp = await PredictProvider(this.resultCalc())
             this.$refs['modal-form'].hide()
-            //this.$refs['modal-result'].show()
+            
+            // Reset our form values
+            this.form.yearEduSel = 1
+            this.form.subjectSel = null
+            this.form.score = 15
+            this.form.maxScore = 30
+            this.form.teacherSel = null
+            this.form.gpa = 2.0
+            this.form.knowledgeScore = 3
+            this.form.doHWByMyself = 2
+            this.form.takeClass = 1
+
             if (resp.state == 100)this.$bvModal.show('modal-drop')
             else if (resp.state == 200)this.$bvModal.show('modal-nodrop')
             },
@@ -215,16 +236,6 @@ export default {
         },
         resultCalc(){
             let midscore = (this.form.score * 100) / this.form.maxScore
-            // let result = {
-            //     "midterm":midscore,
-            //     "yearOfEdu":this.form.yearEduSel,
-            //     "GPAX":this.form.gpa,
-            //     "subject":this.form.subjectSel,
-            //     "instructor":this.form.teacherSel,
-            //     "knowledge":this.form.knowledgeScore,
-            //     "dohomeWork":this.form.doHWByMyself,
-            //     "takeAclass":this.form.takeClass
-            // }
 
             let result = {
                 midterm:midscore,

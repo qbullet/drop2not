@@ -19,6 +19,19 @@
                     <h3>เราแนะนำว่าไม่ควรถอนวิชานี้</h3>
                 </div>
             </template>
+
+            <template v-slot:modal-footer>
+                <div class="w-100">
+                    <b-button
+                        variant="secondary"
+                        size="sm"
+                        class="float-right"
+                        @click="hideNoDropModal()"
+                    >
+                        Close
+                    </b-button>
+                </div>
+            </template>
         </b-modal>
 
         <b-modal 
@@ -38,6 +51,19 @@
                 <div align="center">
                     <div style="padding-bottom:5%;"><img src="../assets/img/icon-sad.svg"/></div>
                     <h3>เราแนะนำให้คุณถอนวิชานี้</h3>
+                </div>
+            </template>
+
+            <template v-slot:modal-footer>
+                <div class="w-100">
+                    <b-button
+                        variant="secondary"
+                        size="sm"
+                        class="float-right"
+                        @click="hideDropModal()"
+                    >
+                        Close
+                    </b-button>
                 </div>
             </template>
         </b-modal>
@@ -60,6 +86,12 @@
             }
         },
         methods: {
+            hideNoDropModal() {
+                this.$refs['modal-nodrop'].hide()
+            },
+            hideDropModal() {
+                this.$refs['modal-drop'].hide()
+            },
         },
     }
 </script>
