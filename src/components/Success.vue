@@ -16,7 +16,7 @@
             <template>
                 <div align="center">
                     <div style="padding-bottom:5%;"><img src="../assets/img/icon-congratulations.svg"/></div>
-                    <h3>เราแนะนำให้คุณไม่ดรอปวิชานี้</h3>
+                    <h3>เราแนะนำให้คุณดรอปวิชานี้</h3>
                 </div>
             </template>
         </b-modal>
@@ -37,7 +37,7 @@
             <template>
                 <div align="center">
                     <div style="padding-bottom:5%;"><img src="../assets/img/icon-sad.svg"/></div>
-                    <h3>เราแนะนำให้คุณถอนวิชานี้</h3>
+                    <h3>เราไม่แนะนำให้คุณถอนวิชานี้</h3>
                 </div>
             </template>
         </b-modal>

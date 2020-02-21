@@ -1,5 +1,5 @@
 import axios from 'axios'
-const URL = 'https://154.202.3.85/dss/count.php?api=CNL2C8VD'
+const URL = 'https://natdanaispace.cf/dss/count.php?api=CNL2C8VD'
 
 async function KnowledgeProvider() {
     const resp = await axios.post(URL)

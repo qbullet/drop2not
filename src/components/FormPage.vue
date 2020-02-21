@@ -152,10 +152,8 @@ export default {
             options:{
                 yearEdus:[
                     {text: 'ชั้นปีที่ 1',value: 1 },
-                    {text: 'ชั้นปีที่ 2',value: 2 },
-                    {text: 'ชั้นปีที่ 3',value: 2 },
-                    {text: 'ชั้นปีที่ 4',value: 3 },
-                    {text: 'มากกว่าชั้นปีที่ 4',value: 3 },
+                    {text: 'ชั้นปีที่ 2 และ 3',value: 2 },
+                    {text: 'ชั้นปีที่ 4 ขึ้นไป',value: 3 },
                 ],
                 subjects: [],
                 teachers: [],
