@@ -21,15 +21,15 @@
             </template>
 
             <template v-slot:modal-footer>
-                <div class="w-100">
-                    <b-button
+                <div class="w-100" style="font-size:20px;">
+                    <span><b-button
                         variant="secondary"
                         size="sm"
                         class="float-right"
                         @click="hideNoDropModal()"
                     >
                         Close
-                    </b-button>
+                    </b-button></span>
                 </div>
             </template>
         </b-modal>
@@ -56,14 +56,14 @@
 
             <template v-slot:modal-footer>
                 <div class="w-100">
-                    <b-button
+                    <span><b-button
                         variant="secondary"
                         size="sm"
                         class="float-right"
                         @click="hideDropModal()"
                     >
                         Close
-                    </b-button>
+                    </b-button></span>
                 </div>
             </template>
         </b-modal>
@@ -75,6 +75,7 @@
         name: 'Success',
         data(){
             return{
+                respond:0,
                 result:true,
                 rand:0,
                 headerBgVariant: 'primary',
@@ -92,7 +93,7 @@
             hideDropModal() {
                 this.$refs['modal-drop'].hide()
             },
-        },
+        }
     }
 </script>
 

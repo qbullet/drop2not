@@ -200,8 +200,8 @@ export default {
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
             let resp = await PredictProvider(this.resultCalc())
-            this.$refs['modal-form'].hide()
             
+            this.$refs['modal-form'].hide()
             // Reset our form values
             this.form.yearEduSel = 1
             this.form.subjectSel = null
@@ -212,7 +212,7 @@ export default {
             this.form.knowledgeScore = 3
             this.form.doHWByMyself = 2
             this.form.takeClass = 1
-
+            window.alert(resp.finish)
             if (resp.state == 100)this.$bvModal.show('modal-drop')
             else if (resp.state == 200)this.$bvModal.show('modal-nodrop')
             },
@@ -262,6 +262,11 @@ export default {
             inst.forEach(element => {
                 this.options.teachers.push({ text: element.name, value: element.weight})
             });
+            
+            // this.options.subjects.push({ text: 'วิชาที่กำลังตัดสินใจ',value: null ,disabled: true})
+            // for(let i=1;i<=subj.length;i++)this.options.subjects.push({ text: subj[i].subject, value: subj[i].weight})
+            // this.options.teachers.push({ text: 'อาจารย์ผู้สอน',value: null ,disabled: true})
+            // for(let i=1;i<=inst.length;i++)this.options.teachers.push({ text: inst[i].name, value: inst[i].weight})
         }
     },
     mounted() {   
